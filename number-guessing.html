@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Number Guessing Game</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            height: 100vh;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #dbeafe, #ede9fe);
+        }
+
+        .container {
+            width: 380px;
+            padding: 30px;
+            background-color: white;
+            border-radius: 20px;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12);
+        }
+
+        .icon {
+            font-size: 45px;
+            margin-bottom: 15px;
+        }
+
+        h1 {
+            font-size: 28px;
+            margin-bottom: 10px;
+            color: #222;
+        }
+
+        .subtitle {
+            color: #666;
+            font-size: 15px;
+            line-height: 1.5;
+            margin-bottom: 25px;
+        }
+
+        .input-section {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        input {
+            flex: 1;
+            padding: 12px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            font-size: 15px;
+            outline: none;
+        }
+
+        input:focus {
+            border-color: #6366f1;
+        }
+
+        button {
+            border: none;
+            border-radius: 8px;
+            padding: 12px 18px;
+            font-size: 15px;
+            cursor: pointer;
+        }
+
+        .guess-btn {
+            background-color: #6366f1;
+            color: white;
+        }
+
+        .result {
+            padding: 15px;
+            background-color: #f3f4f6;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            color: #444;
+        }
+
+        .attempts {
+            margin-bottom: 20px;
+            color: #555;
+        }
+
+        .restart-btn {
+            width: 100%;
+            background-color: #222;
+            color: white;
+        }
+
+        button:hover {
+            opacity: 0.9;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+
+        <div class="icon">🎯</div>
+
+        <h1>Number Guessing Game</h1>
+
+        <p class="subtitle">
+            I have chosen a number between 1 and 100.
+            Can you guess it?
+        </p>
+
+        <div class="input-section">
+            <input 
+                type="number" 
+                placeholder="Enter your guess (1 - 100)"
+                id="guessInput"
+            >
+
+            <button class="guess-btn" id="guessBtn">
+                Guess
+            </button>
+        </div>
+
+        <div class="result" id="result">
+            Make your first guess!
+        </div>
+
+        <p class="attempts">
+            Attempts: <span id="attempts">0</span>
+        </p>
+
+        <button class="restart-btn" id="restartBtn">
+            Restart Game
+        </button>
+
+    </div>
+
+</body>
+<script>
+
+    let guessInput = document.querySelector("#guessInput");
+    let guessButton = document.querySelector("#guessBtn");
+    let result = document.querySelector("#result");
+    let attempts = document.querySelector("#attempts");
+    let restart = document.querySelector("#restartBtn");
+    
+    let numOfAttempts = 0;
+    let computerNum = Math.floor((Math.random()*100))+1;
+    
+
+    
+    guessButton.addEventListener("click", ()=>{
+        let guessNum = Number(guessInput.value);
+        
+
+        if(guessNum >= 1 && guessNum <= 100){
+            if(guessNum === computerNum){
+                result.textContent = "Correct! 🎉 You guessed it in " + numOfAttempts + " attempts.";
+                guessButton.disabled = true;
+            }else if(guessNum > computerNum){
+                result.textContent = "Too High!";
+            }else{
+                result.textContent = "Too Low!";
+            }
+            numOfAttempts += 1;
+            attempts.textContent = numOfAttempts;
+
+        }else{
+            if(guessNum > 100 | guessNum <= 0 | guessNum== ""){
+                alert("Invalid Number");
+                return;
+            }
+                
+            
+        }
+    })
+
+    restart.addEventListener("click",()=>{
+        computerNum = Math.floor((Math.random()*100))+1;
+        numOfAttempts = 0;
+        attempts.textContent = numOfAttempts;
+        result.textContent = "Make your first guess!"
+        guessButton.disabled = false;
+        guessInput.value = "";
+
+    })
+
+</script>
+</html>
